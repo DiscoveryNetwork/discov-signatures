@@ -1,0 +1,18 @@
+main: nl.parrotlync.discovsignatures.DiscovSignatures
+name: DiscovSignatures
+version: 1.0.3
+description: Signature plugin for the Discovery Network
+api-version: 1.12
+author: ParrotLync
+commands:
+  signatures:
+    description: Main DiscovSignatures command
+    usage: /signatures
+    aliases: [ds]
+permissions:
+  discovsignatures.receive:
+    default: op
+    description: Permission to receive signatures
+  discovsignatures.send:
+    default: op
+    description: Permission to send signatures
