@@ -41,6 +41,31 @@ public class SignatureCommandExecutor implements TabExecutor {
                 }
                 return true;
             }
+
+            if (args[0].equalsIgnoreCase("accept")) {
+                Player signatureSender = Bukkit.getPlayer(args[1]);
+                Player receiver = (Player) sender;
+                String nickname = DiscovSignatures.getPlayerManager().getNickName(signatureSender);
+                String signature = DiscovSignatures.getPlayerManager().getRequest(UUID.fromString(args[2]));
+                if (signature != null) {
+                    DiscovSignatures.getPlayerManager().addSignature(receiver, signatureSender, signature);
+                    ChatUtil.sendMessage(receiver, "§7Added a signature from §c" + nickname, true);
+                    ChatUtil.sendMessage(signatureSender, "§7Your signature request was §aAccepted.", true);
+                } else {
+                    ChatUtil.sendMessage(receiver, "§7That request has expired. Please request one again and accept within 60 seconds.", true);
+                }
+                return true;
+            }
+
+            if (args[0].equalsIgnoreCase("deny")) {
+                Player signatureSender = Bukkit.getPlayer(args[1]);
+                Player receiver = (Player) sender;
+                String nickname = DiscovSignatures.getPlayerManager().getNickName(signatureSender);
+                DiscovSignatures.getPlayerManager().getRequest(UUID.fromString(args[2]));
+                ChatUtil.sendMessage(receiver, "§7Denied signature request from §c" + nickname, true);
+                ChatUtil.sendMessage(signatureSender, "§7Your signature request was §cDenied.", true);
+                return true;
+            }
         }
 
         if (sender.hasPermission("discovsignatures.send")) {
@@ -70,31 +95,6 @@ public class SignatureCommandExecutor implements TabExecutor {
             }
         }
 
-        if (args[0].equalsIgnoreCase("accept")) {
-            Player signatureSender = Bukkit.getPlayer(args[1]);
-            Player receiver = (Player) sender;
-            String nickname = DiscovSignatures.getPlayerManager().getNickName(signatureSender);
-            String signature = DiscovSignatures.getPlayerManager().getRequest(UUID.fromString(args[2]));
-            if (signature != null) {
-                DiscovSignatures.getPlayerManager().addSignature(receiver, signatureSender, signature);
-                ChatUtil.sendMessage(receiver, "§7Added a signature from §c" + nickname, true);
-                ChatUtil.sendMessage(signatureSender, "§7Your signature request was §aAccepted.", true);
-            } else {
-                ChatUtil.sendMessage(receiver, "§7That request has expired. Please request one again and accept within 60 seconds.", true);
-            }
-            return true;
-        }
-
-        if (args[0].equalsIgnoreCase("deny")) {
-            Player signatureSender = Bukkit.getPlayer(args[1]);
-            Player receiver = (Player) sender;
-            String nickname = DiscovSignatures.getPlayerManager().getNickName(signatureSender);
-            DiscovSignatures.getPlayerManager().getRequest(UUID.fromString(args[2]));
-            ChatUtil.sendMessage(receiver, "§7Denied signature request from §c" + nickname, true);
-            ChatUtil.sendMessage(signatureSender, "§7Your signature request was §cDenied.", true);
-            return true;
-        }
-
         return help(sender);
     }
 
@@ -110,15 +110,14 @@ public class SignatureCommandExecutor implements TabExecutor {
             return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());
         }
 
-        if (args[0].equalsIgnoreCase("send")) {
-            if (args.length == 2) {
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("send")) {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     suggestions.add(player.getName());
                 }
+                return StringUtil.copyPartialMatches(args[1], suggestions, new ArrayList<>());
             }
-            return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());
         }
-
         return suggestions;
     }
 

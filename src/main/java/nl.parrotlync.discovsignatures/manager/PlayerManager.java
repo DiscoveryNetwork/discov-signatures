@@ -48,9 +48,7 @@ public class PlayerManager {
         } else {
             signatures.get(player.getUniqueId()).add(signature);
         }
-        ItemStack item = createItem(player, getSignatureList(player));
-        player.getInventory().remove(item);
-        player.getInventory().setItem(8, item);
+        giveItem(player);
     }
 
     public boolean removeSignature(Player player, Integer pageNumber) {
@@ -58,9 +56,7 @@ public class PlayerManager {
         if (signatures.get(player.getUniqueId()) != null) {
             try {
                 signatures.get(player.getUniqueId()).remove(pageNumber - 2);
-                ItemStack item = createItem(player, getSignatureList(player));
-                player.getInventory().remove(item);
-                player.getInventory().setItem(8, item);
+                giveItem(player);
                 return true;
             } catch (IndexOutOfBoundsException e) {
                 return false;
@@ -70,10 +66,11 @@ public class PlayerManager {
     }
 
     public void giveItem(Player player) {
-        if (!hasItem(player)) {
-            List<String> signatureList = getSignatureList(player);
-            player.getInventory().setItem(8, createItem(player, signatureList));
+        ItemStack item = createItem(player, getSignatureList(player));
+        if (hasItem(player)) {
+            player.getInventory().remove(item);
         }
+        player.getInventory().setItem(7, item);
     }
 
     private boolean hasItem(Player player) {

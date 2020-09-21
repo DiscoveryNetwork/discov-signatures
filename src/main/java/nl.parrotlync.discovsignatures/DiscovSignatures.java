@@ -1,7 +1,7 @@
 package nl.parrotlync.discovsignatures;
 
 import nl.parrotlync.discovsignatures.command.SignatureCommandExecutor;
-import nl.parrotlync.discovsignatures.listener.PlayerListener;
+import nl.parrotlync.discovsignatures.listener.SignatureListener;
 import nl.parrotlync.discovsignatures.manager.PlayerManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +16,7 @@ public class DiscovSignatures extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new SignatureListener(), this);
         this.getCommand("signatures").setExecutor(new SignatureCommandExecutor());
         playerManager.load();
         getLogger().info("DiscovSignatures is now enabled!");
