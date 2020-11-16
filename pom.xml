@@ -5,7 +5,11 @@
 
     <groupId>nl.parrotlync</groupId>
     <artifactId>DiscovSignatures</artifactId>
-    <version>1.12.2-v1.0.3</version>
+    <version>1.12.2-v1.2${revision}</version>
+
+    <properties>
+        <revision>-SNAPSHOT</revision>
+    </properties>
 
     <build>
         <plugins>
@@ -20,10 +24,17 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://maven.ipictserver.nl/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>nexus-releases</id>
+            <url>https://maven.ipictserver.nl/repository/maven-group/</url>
         </repository>
     </repositories>
 

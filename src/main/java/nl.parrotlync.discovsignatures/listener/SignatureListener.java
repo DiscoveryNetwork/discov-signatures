@@ -1,6 +1,8 @@
 package nl.parrotlync.discovsignatures.listener;
 
 import nl.parrotlync.discovsignatures.DiscovSignatures;
+import nl.parrotlync.discovsignatures.util.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,10 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 public class SignatureListener implements Listener {
@@ -58,6 +57,19 @@ public class SignatureListener implements Listener {
         if (item.getType() == Material.WRITTEN_BOOK) {
             if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        String message = event.getMessage().toLowerCase();
+        if (message.contains("auto") || message.contains("autograph") || message.contains("signature")) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (message.contains(player.getName().toLowerCase()) && player.hasPermission("discovsignatures.send")) {
+                    ChatUtil.sendMessage(player, "§7(§9§l!§7) It seems like §6" + event.getPlayer().getName() + " §7might want your autograph!", false);
+                    break;
+                }
             }
         }
     }
