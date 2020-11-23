@@ -23,7 +23,7 @@ public class SignatureListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         ItemStack item = event.getItemDrop().getItemStack();
-        if (item.getType() == Material.WRITTEN_BOOK) {
+        if (item != null && item.getType() == Material.WRITTEN_BOOK) {
             if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
@@ -33,7 +33,7 @@ public class SignatureListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         ItemStack item = event.getCurrentItem();
-        if (item.getType() == Material.WRITTEN_BOOK) {
+        if (item != null && item.getType() == Material.WRITTEN_BOOK) {
             if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
@@ -43,7 +43,7 @@ public class SignatureListener implements Listener {
     @EventHandler
     public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
         ItemStack item = event.getOffHandItem();
-        if (item.getType() == Material.WRITTEN_BOOK) {
+        if (item != null && item.getType() == Material.WRITTEN_BOOK) {
             if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
@@ -53,7 +53,7 @@ public class SignatureListener implements Listener {
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
         ItemStack item = event.getCursor();
-        if (item.getType() == Material.WRITTEN_BOOK) {
+        if (item != null && item.getType() == Material.WRITTEN_BOOK) {
             if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
