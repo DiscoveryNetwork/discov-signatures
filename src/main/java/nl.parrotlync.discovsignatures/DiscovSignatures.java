@@ -2,33 +2,76 @@ package nl.parrotlync.discovsignatures;
 
 import nl.parrotlync.discovsignatures.command.SignatureCommandExecutor;
 import nl.parrotlync.discovsignatures.listener.SignatureListener;
-import nl.parrotlync.discovsignatures.manager.PlayerManager;
+import nl.parrotlync.discovsignatures.manager.NicknameManager;
+import nl.parrotlync.discovsignatures.manager.RequestManager;
+import nl.parrotlync.discovsignatures.manager.SignatureManager;
+import nl.parrotlync.discovsignatures.util.DatabaseUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public class DiscovSignatures extends JavaPlugin {
     private static DiscovSignatures instance;
-    private static PlayerManager playerManager;
+    private final NicknameManager nicknameManager;
+    private final SignatureManager signatureManager;
+    private final RequestManager requestManager;
+    private DatabaseUtil databaseUtil;
 
     public DiscovSignatures() {
         instance = this;
-        playerManager = new PlayerManager();
+        nicknameManager = new NicknameManager();
+        signatureManager = new SignatureManager();
+        requestManager = new RequestManager();
     }
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new SignatureListener(), this);
         this.getCommand("signatures").setExecutor(new SignatureCommandExecutor());
-        playerManager.load();
+
+        // Database
+        getLogger().info("Trying to establish database connection...");
+        databaseUtil = new DatabaseUtil(getConfig().getString("database.host"), getConfig().getString("database.username"),
+                getConfig().getString("database.password"), getConfig().getString("database.database"));
+        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
+            try {
+                databaseUtil.connect();
+                getLogger().info("Database connection established!");
+            } catch (Exception e) {
+                getLogger().warning("Something went wrong while trying to establish a database connection.");
+                e.printStackTrace();
+            }
+        });
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            signatureManager.load(player);
+        }
         getLogger().info("DiscovSignatures is now enabled!");
     }
 
     @Override
     public void onDisable() {
-        playerManager.save();
         getLogger().info("DiscovSignatures is now disabled!");
     }
 
-    public static DiscovSignatures getInstance() { return instance; }
+    public static DiscovSignatures getInstance() {
+        return instance;
+    }
 
-    public static PlayerManager getPlayerManager() { return playerManager; }
+    public NicknameManager getNicknameManager() {
+        return nicknameManager;
+    }
+
+    public SignatureManager getSignatureManager() {
+        return signatureManager;
+    }
+
+    public RequestManager getRequestManager() {
+        return requestManager;
+    }
+
+    public DatabaseUtil getDatabaseUtil() { return databaseUtil; }
 }

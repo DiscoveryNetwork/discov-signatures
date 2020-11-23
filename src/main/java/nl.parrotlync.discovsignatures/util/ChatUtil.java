@@ -20,7 +20,7 @@ public class ChatUtil {
     }
 
     public static void sendSignature(Player sender, Player receiver, UUID uuid) {
-        String nickname = DiscovSignatures.getPlayerManager().getNickName(sender);
+        String nickname = DiscovSignatures.getInstance().getNicknameManager().getNickname(sender);
         TextComponent main = new TextComponent("§7(§9§l!§7) §c" + nickname + " §7wants to send you their autograph!");
 
         TextComponent accept = new TextComponent("§8[§2Accept§8]");
