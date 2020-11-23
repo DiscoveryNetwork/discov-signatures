@@ -1,5 +1,6 @@
 package nl.parrotlync.discovsignatures.command;
 
+import nl.parrotlync.discovchat.DiscovChat;
 import nl.parrotlync.discovsignatures.DiscovSignatures;
 import nl.parrotlync.discovsignatures.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ public class SignatureCommandExecutor implements TabExecutor {
 
         if (sender.hasPermission("discovsignatures.receive")) {
             if (args.length == 0) {
-                ChatUtil.sendMessage(sender, "§6DiscovSignatures-1.12.2-v1.0.3 §7(§aParrotLync§7) - Use /signatures help", false);
+                ChatUtil.sendMessage(sender, "§6DiscovSignatures-1.12.2-v" + DiscovSignatures.getInstance().getDescription().getVersion() + " §7(§aParrotLync§7) - Use /signatures help", false);
                 return true;
             }
 
@@ -47,7 +48,7 @@ public class SignatureCommandExecutor implements TabExecutor {
             if (args[0].equalsIgnoreCase("accept")) {
                 Player signatureSender = Bukkit.getPlayer(args[1]);
                 Player receiver = (Player) sender;
-                String nickname = DiscovSignatures.getInstance().getNicknameManager().getNickname(signatureSender);
+                String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(signatureSender);
                 String signature = DiscovSignatures.getInstance().getRequestManager().getRequest(UUID.fromString(args[2]));
                 if (signature != null) {
                     DiscovSignatures.getInstance().getSignatureManager().addSignature(receiver, signature);
@@ -62,7 +63,7 @@ public class SignatureCommandExecutor implements TabExecutor {
             if (args[0].equalsIgnoreCase("deny")) {
                 Player signatureSender = Bukkit.getPlayer(args[1]);
                 Player receiver = (Player) sender;
-                String nickname = DiscovSignatures.getInstance().getNicknameManager().getNickname(signatureSender);
+                String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(signatureSender);
                 DiscovSignatures.getInstance().getRequestManager().getRequest(UUID.fromString(args[2]));
                 ChatUtil.sendMessage(receiver, "§7Denied signature request from §c" + nickname, true);
                 ChatUtil.sendMessage(signatureSender, "§7Your signature request was §cDenied.", true);
@@ -75,23 +76,11 @@ public class SignatureCommandExecutor implements TabExecutor {
                 Player player = (Player) sender;
                 if (Bukkit.getPlayer(args[1]) != null) {
                     String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-                    String nickname = DiscovSignatures.getInstance().getNicknameManager().getNickname(player);
+                    String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(player);
                     String signature = ChatColor.translateAlternateColorCodes('&', message) + "\n\n§r§8§o- " + nickname;
                     UUID uuid = DiscovSignatures.getInstance().getRequestManager().addRequest(signature);
                     ChatUtil.sendMessage(player, "§7Signature request was sent to §c" + Bukkit.getPlayer(args[1]).getName(), true);
                     ChatUtil.sendSignature(player, Bukkit.getPlayer(args[1]), uuid);
-                }
-                return true;
-            }
-
-            if (args[0].equalsIgnoreCase("nick")) {
-                Player player = (Player) sender;
-                if (args.length == 1) {
-                    String nickname = DiscovSignatures.getInstance().getNicknameManager().getNickname(player);
-                    ChatUtil.sendMessage(sender, "§7Your nickname is: §c" + nickname, true);
-                } else if (args.length == 2) {
-                    DiscovSignatures.getInstance().getNicknameManager().setNickname(player, args[1]);
-                    ChatUtil.sendMessage(sender, "§7Changed your nickname to: §c" + args[1], true);
                 }
                 return true;
             }
@@ -107,7 +96,6 @@ public class SignatureCommandExecutor implements TabExecutor {
         if (args.length == 1) {
             suggestions.add("give");
             suggestions.add("send");
-            suggestions.add("nick");
             suggestions.add("remove");
             return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());
         }
@@ -130,7 +118,6 @@ public class SignatureCommandExecutor implements TabExecutor {
             ChatUtil.sendMessage(sender, "§3/signatures remove <page> §7Remove a signature from your book", false);
             if (sender.hasPermission("discovsignatures.send")) {
                 ChatUtil.sendMessage(sender, "§3/signatures send <player> <message> §7Send your signature to another player", false);
-                ChatUtil.sendMessage(sender, "§3/signatures nick <nickname> §7Set your signature nickname", false);
             }
         } else {
             ChatUtil.sendMessage(sender, "§cYou do not have permission to do that!", true);

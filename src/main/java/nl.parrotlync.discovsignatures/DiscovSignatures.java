@@ -2,7 +2,6 @@ package nl.parrotlync.discovsignatures;
 
 import nl.parrotlync.discovsignatures.command.SignatureCommandExecutor;
 import nl.parrotlync.discovsignatures.listener.SignatureListener;
-import nl.parrotlync.discovsignatures.manager.NicknameManager;
 import nl.parrotlync.discovsignatures.manager.RequestManager;
 import nl.parrotlync.discovsignatures.manager.SignatureManager;
 import nl.parrotlync.discovsignatures.util.DatabaseUtil;
@@ -10,18 +9,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
-
 public class DiscovSignatures extends JavaPlugin {
     private static DiscovSignatures instance;
-    private final NicknameManager nicknameManager;
     private final SignatureManager signatureManager;
     private final RequestManager requestManager;
     private DatabaseUtil databaseUtil;
 
     public DiscovSignatures() {
         instance = this;
-        nicknameManager = new NicknameManager();
         signatureManager = new SignatureManager();
         requestManager = new RequestManager();
     }
@@ -59,10 +54,6 @@ public class DiscovSignatures extends JavaPlugin {
 
     public static DiscovSignatures getInstance() {
         return instance;
-    }
-
-    public NicknameManager getNicknameManager() {
-        return nicknameManager;
     }
 
     public SignatureManager getSignatureManager() {

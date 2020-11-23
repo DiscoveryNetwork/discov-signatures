@@ -45,5 +45,10 @@
             <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>nl.parrotlync</groupId>
+            <artifactId>DiscovChat-Spigot</artifactId>
+            <version>1.12.2-v1.0-20201123.170420-1</version>
+        </dependency>
     </dependencies>
 </project>
