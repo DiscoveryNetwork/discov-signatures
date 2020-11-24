@@ -24,7 +24,7 @@ public class DatabaseUtil {
         synchronized (this) {
             if (connection != null && !connection.isClosed()) { return; }
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%d/%s", host, 3306, database), username, password);
+            connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%d/%s?autoReconnect=true", host, 3306, database), username, password);
         }
     }
 
