@@ -31,8 +31,9 @@ public class DatabaseUtil {
     public List<String> getSignatures(UUID uuid) throws SQLException, ClassNotFoundException {
         connect();
         List<String> signatures = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT * FROM dsignatures WHERE owner = '" + uuid.toString() + "'");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM dsignatures WHERE owner = ?");
+        statement.setString(1, uuid.toString());
+        ResultSet result = statement.executeQuery();
         while (result.next()) {
             signatures.add(result.getString("signature"));
         }
@@ -41,13 +42,17 @@ public class DatabaseUtil {
 
     public void addSignature(UUID uuid, String signature) throws SQLException, ClassNotFoundException {
         connect();
-        Statement statement = connection.createStatement();
-        statement.execute("INSERT INTO dsignatures (owner, signature) VALUES ('" + uuid.toString() + "', '" + signature + "')");
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO dsignatures (owner, signature) VALUES (?, ?)");
+        statement.setString(1, uuid.toString());
+        statement.setString(2, signature);
+        statement.execute();
     }
 
     public void removeSignature(UUID uuid, String signature) throws SQLException, ClassNotFoundException {
         connect();
-        Statement statement = connection.createStatement();
-        statement.execute("DELETE FROM dsignatures WHERE owner = '" + uuid.toString() + "' AND signature = '" + signature + "'");
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM dsignatures WHERE owner = ? AND signature = ?");
+        statement.setString(1, uuid.toString());
+        statement.setString(2, signature);
+        statement.execute();
     }
 }
