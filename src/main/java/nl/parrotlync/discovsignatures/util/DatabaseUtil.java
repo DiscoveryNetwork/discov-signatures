@@ -1,7 +1,5 @@
 package nl.parrotlync.discovsignatures.util;
 
-import org.bukkit.entity.Player;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
