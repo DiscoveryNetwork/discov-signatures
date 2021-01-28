@@ -1,8 +1,8 @@
 package nl.parrotlync.discovsignatures.command;
 
-import nl.parrotlync.discovchat.DiscovChat;
 import nl.parrotlync.discovsignatures.DiscovSignatures;
 import nl.parrotlync.discovsignatures.util.ChatUtil;
+import nl.parrotlync.discovsuite.spigot.DiscovSuite;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -48,7 +48,7 @@ public class SignatureCommandExecutor implements TabExecutor {
             if (args[0].equalsIgnoreCase("accept")) {
                 Player signatureSender = Bukkit.getPlayer(args[1]);
                 Player receiver = (Player) sender;
-                String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(signatureSender);
+                String nickname = DiscovSuite.getInstance().getNicknameManager().getNickname(signatureSender);
                 String signature = DiscovSignatures.getInstance().getRequestManager().getRequest(UUID.fromString(args[2]));
                 if (signature != null) {
                     DiscovSignatures.getInstance().getSignatureManager().addSignature(receiver, signature);
@@ -63,7 +63,7 @@ public class SignatureCommandExecutor implements TabExecutor {
             if (args[0].equalsIgnoreCase("deny")) {
                 Player signatureSender = Bukkit.getPlayer(args[1]);
                 Player receiver = (Player) sender;
-                String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(signatureSender);
+                String nickname = DiscovSuite.getInstance().getNicknameManager().getNickname(signatureSender);
                 DiscovSignatures.getInstance().getRequestManager().getRequest(UUID.fromString(args[2]));
                 ChatUtil.sendMessage(receiver, "§7Denied signature request from §c" + nickname, true);
                 ChatUtil.sendMessage(signatureSender, "§7Your signature request was §cDenied.", true);
@@ -76,7 +76,7 @@ public class SignatureCommandExecutor implements TabExecutor {
                 Player player = (Player) sender;
                 if (Bukkit.getPlayer(args[1]) != null) {
                     String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
-                    String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(player);
+                    String nickname = DiscovSuite.getInstance().getNicknameManager().getNickname(player);
                     String signature = ChatColor.translateAlternateColorCodes('&', message) + "\n\n§r§8§o- " + nickname;
                     UUID uuid = DiscovSignatures.getInstance().getRequestManager().addRequest(signature);
                     ChatUtil.sendMessage(player, "§7Signature request was sent to §c" + Bukkit.getPlayer(args[1]).getName(), true);

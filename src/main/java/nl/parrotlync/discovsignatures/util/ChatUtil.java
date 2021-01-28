@@ -4,8 +4,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import nl.parrotlync.discovchat.DiscovChat;
-import nl.parrotlync.discovsignatures.DiscovSignatures;
+import nl.parrotlync.discovsuite.spigot.DiscovSuite;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,7 +20,7 @@ public class ChatUtil {
     }
 
     public static void sendSignature(Player sender, Player receiver, UUID uuid) {
-        String nickname = DiscovChat.getInstance().getNicknameManager().getNickname(sender);
+        String nickname = DiscovSuite.getInstance().getNicknameManager().getNickname(sender);
         TextComponent main = new TextComponent("§7(§9§l!§7) §c" + nickname + " §7wants to send you their autograph!");
 
         TextComponent accept = new TextComponent("§8[§2Accept§8]");

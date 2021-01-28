@@ -47,8 +47,8 @@
         </dependency>
         <dependency>
             <groupId>nl.parrotlync</groupId>
-            <artifactId>DiscovChat-Spigot</artifactId>
-            <version>1.12.2-v1.0-20201123.170420-1</version>
+            <artifactId>DiscovSuite</artifactId>
+            <version>2.2.18</version>
         </dependency>
     </dependencies>
 </project>

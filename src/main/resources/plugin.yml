@@ -4,7 +4,7 @@ version: 1.0.3
 description: Signature plugin for the Discovery Network
 api-version: 1.12
 author: ParrotLync
-depend: [DiscovChat]
+depend: [DiscovSuite]
 commands:
   signatures:
     description: Main DiscovSignatures command
