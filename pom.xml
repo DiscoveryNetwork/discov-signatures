@@ -48,7 +48,7 @@
         <dependency>
             <groupId>nl.parrotlync</groupId>
             <artifactId>DiscovSuite</artifactId>
-            <version>2.2.18</version>
+            <version>2.2.1</version>
         </dependency>
     </dependencies>
 </project>
