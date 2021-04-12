@@ -21,7 +21,7 @@ public class SignatureCommandExecutor implements TabExecutor {
 
         if (sender.hasPermission("discovsignatures.receive")) {
             if (args.length == 0) {
-                ChatUtil.sendMessage(sender, "§6DiscovSignatures-1.12.2-v" + DiscovSignatures.getInstance().getDescription().getVersion() + " §7(§aParrotLync§7) - Use /signatures help", false);
+                ChatUtil.sendMessage(sender, "§6DiscovSignatures-" + DiscovSignatures.getInstance().getDescription().getVersion() + " §7(§aParrotLync§7) - Use /signatures help", false);
                 return true;
             }
 
