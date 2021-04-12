@@ -15,6 +15,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 public class SignatureListener implements Listener {
 
     @EventHandler
@@ -26,8 +28,8 @@ public class SignatureListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         ItemStack item = event.getItemDrop().getItemStack();
-        if (item != null && item.getType() == Material.WRITTEN_BOOK) {
-            if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
+        if (item.getType() == Material.WRITTEN_BOOK) {
+            if (Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
         }
@@ -37,7 +39,7 @@ public class SignatureListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         ItemStack item = event.getCurrentItem();
         if (item != null && item.getType() == Material.WRITTEN_BOOK) {
-            if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
+            if (Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
         }
@@ -47,7 +49,7 @@ public class SignatureListener implements Listener {
     public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
         ItemStack item = event.getOffHandItem();
         if (item != null && item.getType() == Material.WRITTEN_BOOK) {
-            if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
+            if (Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
         }
@@ -57,7 +59,7 @@ public class SignatureListener implements Listener {
     public void onInventoryDrag(InventoryDragEvent event) {
         ItemStack item = event.getCursor();
         if (item != null && item.getType() == Material.WRITTEN_BOOK) {
-            if (item.getItemMeta().getDisplayName().equals("§6Autograph Book")) {
+            if (Objects.requireNonNull(item.getItemMeta()).getDisplayName().equals("§6Autograph Book")) {
                 event.setCancelled(true);
             }
         }

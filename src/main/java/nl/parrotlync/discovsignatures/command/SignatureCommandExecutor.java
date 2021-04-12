@@ -12,10 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class SignatureCommandExecutor implements TabExecutor {
 
@@ -79,8 +76,8 @@ public class SignatureCommandExecutor implements TabExecutor {
                     String nickname = DiscovSuite.getInstance().getNicknameManager().getNickname(player);
                     String signature = ChatColor.translateAlternateColorCodes('&', message) + "\n\n§r§8§o- " + nickname;
                     UUID uuid = DiscovSignatures.getInstance().getRequestManager().addRequest(signature);
-                    ChatUtil.sendMessage(player, "§7Signature request was sent to §c" + Bukkit.getPlayer(args[1]).getName(), true);
-                    ChatUtil.sendSignature(player, Bukkit.getPlayer(args[1]), uuid);
+                    ChatUtil.sendMessage(player, "§7Signature request was sent to §c" + Objects.requireNonNull(Bukkit.getPlayer(args[1])).getName(), true);
+                    ChatUtil.sendSignature(player, Objects.requireNonNull(Bukkit.getPlayer(args[1])), uuid);
                 }
                 return true;
             }

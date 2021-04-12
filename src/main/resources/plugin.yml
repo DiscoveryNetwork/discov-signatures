@@ -1,8 +1,8 @@
 main: nl.parrotlync.discovsignatures.DiscovSignatures
-name: DiscovSignatures
-version: 1.0.3
-description: Signature plugin for the Discovery Network
-api-version: 1.12
+name: ${artifactId}
+version: ${version}
+description: ${description}
+api-version: 1.15
 author: ParrotLync
 depend: [DiscovSuite]
 commands:

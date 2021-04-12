@@ -49,6 +49,7 @@ public class SignatureManager {
     public ItemStack getItem(Player player) {
         ItemStack item = new ItemStack(Material.WRITTEN_BOOK, 1);
         BookMeta meta = (BookMeta) item.getItemMeta();
+        assert meta != null;
         meta.setDisplayName("§6Autograph Book");
         meta.setLore(Collections.singletonList("Gotta collect 'em all!"));
         meta.setAuthor(player.getName());
@@ -62,14 +63,12 @@ public class SignatureManager {
 
     public void load(Player player) {
         Bukkit.getScheduler().runTaskAsynchronously(DiscovSignatures.getInstance(), () -> {
-            List<String> loadedSignatures = null;
+            List<String> loadedSignatures;
             try {
                 loadedSignatures = DiscovSignatures.getInstance().getDatabaseUtil().getSignatures(player.getUniqueId());
                 signatures.put(player.getUniqueId(), loadedSignatures);
                 DiscovSignatures.getInstance().getLogger().info("Loaded " + loadedSignatures.size() + " signatures for player " + player.getUniqueId());
-                Bukkit.getScheduler().runTask(DiscovSignatures.getInstance(), () -> {
-                    player.getInventory().setItem(7, getItem(player));
-                });
+                Bukkit.getScheduler().runTask(DiscovSignatures.getInstance(), () -> player.getInventory().setItem(7, getItem(player)));
             } catch (Exception e) {
                 DiscovSignatures.getInstance().getLogger().warning("Something went wrong while fetching signatures for player " + player.getUniqueId());
                 e.printStackTrace();

@@ -5,7 +5,8 @@
 
     <groupId>nl.parrotlync</groupId>
     <artifactId>DiscovSignatures</artifactId>
-    <version>1.12.2-v1.2${revision}</version>
+    <version>1.12.2-v1.3${revision}</version>
+    <description>Signatures plugin for Discov Network</description>
 
     <properties>
         <revision>-SNAPSHOT</revision>
@@ -22,6 +23,12 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <distributionManagement>
@@ -42,7 +49,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

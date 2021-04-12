@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class DiscovSignatures extends JavaPlugin {
     private static DiscovSignatures instance;
     private final SignatureManager signatureManager;
@@ -25,7 +27,7 @@ public class DiscovSignatures extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new SignatureListener(), this);
-        this.getCommand("signatures").setExecutor(new SignatureCommandExecutor());
+        Objects.requireNonNull(this.getCommand("signatures")).setExecutor(new SignatureCommandExecutor());
 
         // Database
         getLogger().info("Trying to establish database connection...");
