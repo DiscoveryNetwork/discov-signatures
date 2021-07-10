@@ -47,10 +47,11 @@ public class SignatureManager {
     }
 
     public ItemStack getItem(Player player) {
-        ItemStack item = new ItemStack(Material.WRITTEN_BOOK, 1);
+        ItemStack item = new ItemStack(Material.WRITTEN_BOOK);
         BookMeta meta = (BookMeta) item.getItemMeta();
         assert meta != null;
         meta.setDisplayName("§6Autograph Book");
+        meta.setTitle("Blank"); // Apparently spigot needs this. Otherwise it will say *invalid book tag*
         meta.setLore(Collections.singletonList("Gotta collect 'em all!"));
         meta.setAuthor(player.getName());
         meta.addPage("§9Welcome to your \n§6§lAutograph Book!\n\n§r§7§oYou can collect signatures by asking online §r§aStaff Members §7§oor §r§aCharacters §7§ofor an autograph.\n\nTo accept a signature request, click the §r§8[§2Accept§8] §7§obutton in chat.");
